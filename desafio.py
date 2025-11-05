@@ -1,11 +1,12 @@
-from funções import sacar, depositar
+from funções import sacar, depositar, usuario, listar_usuarios
+
 menu = """
 
+[u] Acesso de usuário - digite seus dados para liberar seu acesso.
 [d] Depositar
 [s] Sacar
 [e] Extrato
 [q] Sair
-
 => """
 
 saldo = 0
@@ -17,15 +18,19 @@ LIMITE_SAQUES = 3
 while True:
 
     opcao = input(menu)
+    
+    if opcao == "u":
+        nome_usuario = usuario()
+    
 
-    if opcao == "d":
-        valor = float(input("Informe o valor do depósito: "))
+    elif opcao == "d":
+        valor = float(input(f"Olá, {nome_usuario}, Informe o valor do depósito: "))
         
         saldo, extrato = depositar(saldo, valor, extrato)
 
     elif opcao == "s":
-        valor = float(input("Informe o valor do saque: "))
-        saldo, extrato, numero_saques = sacar(
+        valor = float(input("Informe o valor do saque: (mínimo R$500,00) "))
+        saldo, extrato = sacar(
             saldo = saldo,
             valor = valor,
             extrato = extrato,
@@ -38,11 +43,13 @@ while True:
     elif opcao == "e":
         print("\n================ EXTRATO ================")
         print("Não foram realizadas movimentações." if not extrato else extrato)
-        print(f"\nSaldo: R$ {saldo:.2f}")
+        print(f"\nSaldo de {nome_usuario}: R$ {saldo:.2f}")
         print("==========================================")
 
     elif opcao == "q":
         break
+    
 
     else:
         print("Operação inválida, por favor selecione novamente a operação desejada.")
+        
