@@ -1,7 +1,14 @@
-def usuario():
+user = []
+
+def cadastrar_usuario(usuarios):
+    cpf = input("Informe seu CPF (somente números): ")
+    for usuario in usuarios:
+        if usuario['cpf'] == cpf:
+            print("ERRO: Já existe um usuário cadastrado com esse CPF.")
+            return None, None
+        
     nome = input("Informe seu nome completo: ")
     data_nascimento = input("Informe sua data de nascimento (DD/MM/AAAA): ")
-    cpf = input("Informe seu CPF (somente números): ")
     endereco = {
         "rua": input("Informe sua rua: "),
         "numero": input("Informe o número da residência: "),
@@ -9,11 +16,23 @@ def usuario():
         "cidade": input("Informe sua cidade: "),
         "estado": input("Informe seu estado (ex.:PE): ")
     }
-    enderecoCompleto = (f" {endereco['rua']}, {endereco['numero']} - {endereco['bairro']} - {endereco['cidade']}/{endereco['estado']}")
-    return nome
+    
+    novo_usuario = {
+        "nome": nome,
+        "data_nascimento": data_nascimento,
+        "cpf": cpf,
+        "enderecoCompleto" : (f" {endereco['rua']}, {endereco['numero']} - {endereco['bairro']} - {endereco['cidade']}/{endereco['estado']}")
+    }
+    
+    usuarios.append(novo_usuario)
+    print("Usuário cadastrado com sucesso.")
+    return nome, cpf
+
     
     
 def listar_usuarios(usuarios):
+    print("=-=-=-=Lista de Usuários Cadastrados =-=-=-=")
+    
     if not usuarios:
         print("Nenhum usuário cadastrado.")
         return
@@ -24,10 +43,6 @@ def listar_usuarios(usuarios):
         print(f"CPF: {usuario['cpf']}")
         print(f"Endereço: {usuario['endereco']}")
         print("-" * 40)
-        
-    if cpf in usuarios:
-        print("Já existe um usuário cadastrado com esse CPF.")
-        return
 
 
 
@@ -70,5 +85,3 @@ def depositar(saldo, valor, extrato):
       
 
 
-
-    

@@ -1,8 +1,9 @@
-from funções import sacar, depositar, usuario, listar_usuarios
+from funções import sacar, depositar, cadastrar_usuario, listar_usuarios, user
 
 menu = """
 
 [u] Acesso de usuário - digite seus dados para liberar seu acesso.
+[l] Listar usuários
 [d] Depositar
 [s] Sacar
 [e] Extrato
@@ -20,9 +21,15 @@ while True:
     opcao = input(menu)
     
     if opcao == "u":
-        nome_usuario = usuario()
+        novo_nome, novo_cpf = cadastrar_usuario(user)
+        
+        if novo_nome and novo_cpf:
+            nome_usuario = novo_nome
+            print(f"Bem-vindo, {nome_usuario} ")
+            
+    elif opcao == "l":
+        listar_usuarios(usuarios)
     
-
     elif opcao == "d":
         valor = float(input(f"Olá, {nome_usuario}, Informe o valor do depósito: "))
         
