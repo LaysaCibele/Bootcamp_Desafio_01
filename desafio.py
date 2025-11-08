@@ -1,4 +1,4 @@
-from funções import sacar, depositar, cadastrar_usuario, listar_usuarios, user
+from funções import sacar, depositar, verExtrato,  cadastrar_usuario, listar_usuarios, user
 
 menu = """
 
@@ -25,13 +25,13 @@ while True:
         
         if novo_nome and novo_cpf:
             nome_usuario = novo_nome
-            print(f"Bem-vindo, {nome_usuario} ")
+            print(f"Bem-vindo!")
             
     elif opcao == "l":
         listar_usuarios(usuarios)
     
     elif opcao == "d":
-        valor = float(input(f"Olá, {nome_usuario}, Informe o valor do depósito: "))
+        valor = float(input(f"Informe o valor do depósito: "))
         
         saldo, extrato = depositar(saldo, valor, extrato)
 
@@ -48,10 +48,7 @@ while True:
     
 
     elif opcao == "e":
-        print("\n================ EXTRATO ================")
-        print("Não foram realizadas movimentações." if not extrato else extrato)
-        print(f"\nSaldo de {nome_usuario}: R$ {saldo:.2f}")
-        print("==========================================")
+        verExtrato(saldo, extrato)
 
     elif opcao == "q":
         break
