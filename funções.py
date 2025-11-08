@@ -1,4 +1,7 @@
 user = []
+cc = []
+agencia = "0001"
+numeroConta = 111
 
 def cadastrar_usuario(usuarios):
     cpf = input("Informe seu CPF (somente números): ")
@@ -41,7 +44,46 @@ def listar_usuarios(usuarios):
         print(f"Nome: {usuario['nome']}")
         print(f"Data de Nascimento: {usuario['data_nascimento']}")
         print(f"CPF: {usuario['cpf']}")
-        print(f"Endereço: {usuario['endereco']}")
+        print(f"Endereço: {usuario['enderecoCompleto']}")
+        print("-" * 40)
+
+def filtrar_usuario(cpf, usuarios):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario['cpf'] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
+
+
+def contaCorrente(agencia, numeroConta, usuarios):
+    cpf = input("Informe o seu CPF: ")
+    usuario =filtrar_usuario(cpf, usuarios)
+    
+    if usuario:
+        novaConta = {
+            "agencia": agencia,
+            "numeroConta": numeroConta,
+            "usuario": usuario
+        }
+        return novaConta
+    else:
+        print("Usuário não encontrado. crie um usuário antes.")
+        return None
+    
+    
+    
+def listar_contas(cc):
+    print("\n=-=-=-= Lista de Contas Correntes Cadastradas =-=-=-=")
+
+    if not cc:
+        print("Nenhuma conta corrente cadastrada.")
+        return
+        
+    for conta in cc:
+        linha = f"""
+            Agência:\t{conta['agencia']}
+            C/C:\t\t{conta['numeroConta']}
+            Titular:\t{conta['usuario']['nome']}
+            CPF:\t\t{conta['usuario']['cpf']}
+        """
+        print(linha.strip())
         print("-" * 40)
 
 
@@ -72,7 +114,7 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, LIMITE_SAQUES):
 
     
     
-def depositar(saldo, valor, extrato):
+def depositar(saldo, valor, extrato, /):
         if valor > 0:
             saldo += valor
             extrato += f"Depósito: R$ {valor:.2f}\n"
@@ -84,12 +126,10 @@ def depositar(saldo, valor, extrato):
     
       
 
-def verExtrato(saldo, extrato):
-    print("\n================ EXTRATO ================")
+def verExtrato(saldo, / ,*, extrato):
     print("\n================ EXTRATO ================")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo: R$ {saldo:.2f}")
     print("==========================================")
     
     return saldo, extrato
-    

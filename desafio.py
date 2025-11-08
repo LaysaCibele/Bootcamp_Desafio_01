@@ -1,9 +1,11 @@
-from funções import sacar, depositar, verExtrato,  cadastrar_usuario, listar_usuarios, user
+from funções import sacar, depositar, verExtrato,  cadastrar_usuario, listar_usuarios, contaCorrente, listar_contas,  user, cc, agencia, numeroConta
 
 menu = """
 
 [u] Acesso de usuário - digite seus dados para liberar seu acesso.
+[cc] Criar conta corrente
 [l] Listar usuários
+[lc] Listar conta corrente
 [d] Depositar
 [s] Sacar
 [e] Extrato
@@ -27,8 +29,19 @@ while True:
             nome_usuario = novo_nome
             print(f"Bem-vindo!")
             
+            
+    elif opcao == "cc":
+        conta = contaCorrente(agencia, numeroConta, user)
+        if conta:
+            cc.append(conta)
+            numeroConta += 1
+            
     elif opcao == "l":
-        listar_usuarios(usuarios)
+        listar_usuarios(user)
+        
+        
+    elif opcao == "lc":
+        listar_contas(cc)
     
     elif opcao == "d":
         valor = float(input(f"Informe o valor do depósito: "))
@@ -48,7 +61,7 @@ while True:
     
 
     elif opcao == "e":
-        verExtrato(saldo, extrato)
+        verExtrato(saldo, extrato=extrato)
 
     elif opcao == "q":
         break
@@ -57,3 +70,4 @@ while True:
     else:
         print("Operação inválida, por favor selecione novamente a operação desejada.")
         
+
